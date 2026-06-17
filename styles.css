@@ -727,7 +727,12 @@ em{font-style:normal!important;font-weight:600}
 .usmap__lab{font-family:'IBM Plex Mono';font-size:10px;fill:var(--ink);opacity:0;transition:opacity .25s;
   paint-order:stroke;stroke:#fff;stroke-width:3.4px;stroke-linejoin:round}
 .usmap__mk:hover .usmap__lab{opacity:1}
-.usmap__note{text-align:center;font-family:'IBM Plex Mono';font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:1.5rem}
+.usmap__note{text-align:center;font-family:'IBM Plex Mono';font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:1.6rem}
+.usmap__cities{display:grid;grid-template-columns:repeat(6,1fr);gap:.35rem 1.3rem;max-width:960px;margin:2.4rem auto 0;text-align:left}
+.usmap__cities a{font-family:'Inter';font-size:.92rem;color:var(--ink-mid);padding:.5rem 0;border-bottom:1px solid var(--line2);transition:color .25s,padding-left .25s;display:block}
+.usmap__cities a:hover{color:var(--green);padding-left:.3rem}
+@media(max-width:900px){ .usmap__cities{grid-template-columns:repeat(4,1fr)} }
+@media(max-width:600px){ .usmap__cities{grid-template-columns:repeat(2,1fr)} }
 
 /* location hub office cards */
 .offices{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.8rem;text-align:left}
