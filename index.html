@@ -139,6 +139,21 @@
     </div>
   </section>
 
+  <!-- ═══ INFO · IN THE PRESS (rotating) ═══ -->
+  <section class="info" id="press">
+    <div class="info__wrap">
+      <p class="eyebrow center" data-fade>In the Press</p>
+      <div class="quoterotate" data-fade>
+        <blockquote class="qr__item is-active"><p>Perhaps the City's premier tutoring company.</p><cite>The New York Times</cite></blockquote>
+        <blockquote class="qr__item"><p>The Institute for Advanced Study of tutoring services.</p><cite>The New Yorker</cite></blockquote>
+        <blockquote class="qr__item"><p>Advantage Testing has fostered intellectual growth and academic success amongst the future business, artistic, and civic leaders who will shape our City and our world.</p><cite>Mayor Michael Bloomberg</cite></blockquote>
+        <blockquote class="qr__item"><p>In the end, Advantage Testing is simply bringing to the SAT the same qualities we value in any teacher — passion, patience, clarity, inspiration.</p><cite>The New York Times Magazine</cite></blockquote>
+        <blockquote class="qr__item"><p>A pioneer in instituting the scrupulous standards that have elevated tutoring to the respected profession it has become.</p><cite>The London Evening Standard</cite></blockquote>
+      </div>
+      <div class="qr__dots" id="qrDots"></div>
+    </div>
+  </section>
+
   <!-- ═══ INFO · THE METHOD ═══ -->
   <section class="info" id="approach">
     <div class="info__wrap">
@@ -194,13 +209,8 @@
       <h2 class="info__head" data-fade>More than twenty offices,<br>and <em>online.</em></h2>
       <p class="info__sub" data-fade>More than twenty offices across the United States and the United Kingdom, a growing network of satellite locations, and live one-on-one tutoring available worldwide.</p>
 
-      <div class="geo" data-fade>
-        <span><b>New York</b>, NY</span><span>Long Island, NY</span><span>Westchester, NY</span><span>Northern NJ</span>
-        <span>Philadelphia, PA</span><span>Westport, CT</span><span>Washington, DC</span><span>Boston, MA</span>
-        <span>Charlotte, NC</span><span>South Florida, FL</span><span>Chicago, IL</span><span>Houston, TX</span>
-        <span>Austin, TX</span><span>Los Angeles, CA</span><span>Orange County, CA</span><span>Silicon Valley, CA</span>
-        <span>La Jolla, CA</span><span>Portland, OR</span><span>United Kingdom</span><span>+ satellite offices</span>
-      </div>
+      <div class="usmap" id="usmap" data-fade></div>
+      <p class="usmap__note" data-fade>20+ U.S. offices · London · Paris · and online, worldwide</p>
       <div class="cta-row" data-fade><a class="btn btn--ghost" href="locations.html">See all locations</a></div>
     </div>
   </section>
@@ -235,13 +245,6 @@
         <div class="review" data-fade><div class="review__stars">★★★★★</div><p>"Really educated, really dedicated — and the materials are far better than any book you can buy."</p><cite><b>Parent</b> — New York, NY</cite></div>
       </div>
 
-      <div class="press-strip" data-fade>
-        <b>As featured in</b>
-        <span>The New York Times</span>
-        <span>The New Yorker</span>
-        <span>Bloomberg</span>
-        <span>London Evening Standard</span>
-      </div>
     </div>
   </section>
 
@@ -278,6 +281,43 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+(function(){
+  var el=document.getElementById('usmap');
+  if(!el||!window.d3||!window.topojson) return;
+  var OFF=[{n:'New York',c:[-73.951,40.776],f:1},{n:'Long Island',c:[-73.64,40.79]},{n:'Westchester',c:[-73.69,40.98]},
+    {n:'Northern NJ',c:[-74.30,40.74]},{n:'Princeton',c:[-74.66,40.35]},{n:'Philadelphia',c:[-75.16,39.95]},
+    {n:'Westport',c:[-73.36,41.14]},{n:'Boston',c:[-71.06,42.36]},{n:'Washington, DC',c:[-77.04,38.90]},
+    {n:'Charlotte',c:[-80.84,35.23]},{n:'South Florida',c:[-80.10,26.36]},{n:'Chicago',c:[-87.63,41.88]},
+    {n:'Houston',c:[-95.37,29.76]},{n:'Austin',c:[-97.74,30.27]},{n:'Dallas',c:[-96.80,32.78]},
+    {n:'Denver',c:[-104.99,39.74]},{n:'Los Angeles',c:[-118.24,34.05]},{n:'Orange County',c:[-117.84,33.70]},
+    {n:'La Jolla',c:[-117.27,32.85]},{n:'Silicon Valley',c:[-122.08,37.39]},{n:'Portland',c:[-122.68,45.42]}];
+  var W=1000,H=620;
+  var svg=d3.select(el).append('svg').attr('class','usmap__svg').attr('viewBox','0 0 '+W+' '+H);
+  d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function(us){
+    var states=topojson.feature(us,us.objects.states);
+    var proj=d3.geoAlbersUsa().fitSize([W,H],states);
+    var path=d3.geoPath(proj);
+    svg.append('g').selectAll('path').data(states.features).enter().append('path').attr('d',path).attr('class','usmap__state');
+    var g=svg.append('g'),marks=[];
+    OFF.forEach(function(o){
+      var p=proj(o.c); if(!p) return;
+      var grp=g.append('g').attr('class','usmap__mk'+(o.f?' is-flag':'')).attr('transform','translate('+p[0]+','+p[1]+')').style('opacity',0);
+      grp.append('circle').attr('class','usmap__pulse').attr('r',o.f?6:4.5);
+      grp.append('circle').attr('class','usmap__dot').attr('r',o.f?5.5:3.8);
+      grp.append('title').text(o.n);
+      var right=p[0]>W*0.5;
+      grp.append('text').attr('class','usmap__lab').attr('x',right?-9:9).attr('text-anchor',right?'end':'start').attr('y',3.5).text(o.n);
+      marks.push(grp);
+    });
+    var shown=false;
+    function reveal(){ if(shown)return; shown=true; marks.forEach(function(grp,i){ grp.transition().delay(140+i*60).duration(520).style('opacity',1); }); }
+    if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){reveal();io.disconnect();}});},{threshold:0.18}); io.observe(el); } else reveal();
+  }).catch(function(){ el.innerHTML='<p class="usmap__note">New York · Boston · Washington, DC · Chicago · Houston · Los Angeles · and 15 more</p>'; });
+})();
+</script>
 <script src="script.js"></script>
 </body>
 </html>

@@ -202,6 +202,32 @@ document.addEventListener('DOMContentLoaded', () => {
     $$('[data-fade]').forEach(el => ScrollTrigger.create({ trigger:el, start:'top 85%', onEnter:()=>el.classList.add('in') }));
   } else $$('[data-fade]').forEach(el => el.classList.add('in'));
 
+  /* ---------------- ROTATING PRESS QUOTES ---------------- */
+  const qr = $('.quoterotate');
+  if (qr){
+    const items = $$('.qr__item', qr);
+    const dotsWrap = $('#qrDots');
+    let idx = 0, timer = null;
+    items.forEach((_, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Show quote ' + (i+1));
+      if (i === 0) b.classList.add('is-active');
+      b.addEventListener('click', () => go(i));
+      dotsWrap && dotsWrap.appendChild(b);
+    });
+    const dots = dotsWrap ? $$('button', dotsWrap) : [];
+    function go(n){
+      items[idx].classList.remove('is-active'); dots[idx] && dots[idx].classList.remove('is-active');
+      idx = n;
+      items[idx].classList.add('is-active'); dots[idx] && dots[idx].classList.add('is-active');
+      restart();
+    }
+    function next(){ go((idx + 1) % items.length); }
+    function restart(){ clearInterval(timer); timer = setInterval(next, 5500); }
+    restart();
+    qr.addEventListener('mouseenter', () => clearInterval(timer));
+    qr.addEventListener('mouseleave', restart);
+  }
+
   /* ---------------- PROGRESS BAR + TOPBAR ---------------- */
   const bar = $('#scrollbar'), topbar = $('#topbar');
   function onScrollUI(){
