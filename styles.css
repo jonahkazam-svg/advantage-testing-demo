@@ -721,7 +721,7 @@ em{font-style:normal!important;font-weight:600}
    ============================================================ */
 /* map section: trim the space above so the whole map is visible while pinned */
 #reach{padding-top:clamp(3.5rem,6vh,5rem)}
-.usmap{width:100%;max-width:min(1000px,calc((100vh - 25rem) * 1.6129));margin:1.4rem auto 0;position:relative;aspect-ratio:1000/620}
+.usmap{width:100%;max-width:min(1000px,max(480px,calc((100vh - 25rem) * 1.6129)));margin:1.4rem auto 0;position:relative;aspect-ratio:1000/620}
 .usmap__svg{width:100%;height:auto;display:block;overflow:visible}
 .usmap__state{fill:#e4ece7;stroke:#fbfdfc;stroke-width:.7;transition:fill .5s}
 .usmap:hover .usmap__state{fill:#e0e9e3}
