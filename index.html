@@ -65,9 +65,18 @@
       <div class="act__scrim"></div>
       <div class="act__label">Advantage Testing — One Teacher. One Student.</div>
       <div class="cap cap--center" data-from="0" data-to="0.24">
-        <p class="eyebrow">Private Tutoring · Est. 1986</p>
-        <h1 class="bignum">America's most highly regarded private tutoring.</h1>
-        <p class="cap__sub">No mode of instruction is more powerful than <em>one-on-one tutoring.</em></p>
+        <div class="herorotate" id="heroRotate">
+          <div class="hr__item hr--intro is-active">
+            <p class="eyebrow">Private Tutoring · Est. 1986</p>
+            <h1 class="bignum">America's most highly regarded private tutoring.</h1>
+            <p class="cap__sub">No mode of instruction is more powerful than <em>one-on-one tutoring.</em></p>
+          </div>
+          <blockquote class="hr__item hr--quote"><p class="eyebrow">In the Press</p><p class="hr__quote">Perhaps the City's premier tutoring company.</p><cite>The New York Times</cite></blockquote>
+          <blockquote class="hr__item hr--quote"><p class="eyebrow">In the Press</p><p class="hr__quote">The Institute for Advanced Study of tutoring services.</p><cite>The New Yorker</cite></blockquote>
+          <blockquote class="hr__item hr--quote"><p class="eyebrow">In the Press</p><p class="hr__quote">Advantage Testing has fostered intellectual growth and academic success amongst the future business, artistic, and civic leaders who will shape our City and our world.</p><cite>Mayor Michael Bloomberg</cite></blockquote>
+          <blockquote class="hr__item hr--quote"><p class="eyebrow">In the Press</p><p class="hr__quote">In the end, Advantage Testing is simply bringing to the SAT the same qualities we value in any teacher — passion, patience, clarity, inspiration.</p><cite>The New York Times Magazine</cite></blockquote>
+          <blockquote class="hr__item hr--quote"><p class="eyebrow">In the Press</p><p class="hr__quote">A pioneer in instituting the scrupulous standards that have elevated tutoring to the respected profession it has become.</p><cite>The London Evening Standard</cite></blockquote>
+        </div>
       </div>
       <div class="cap cap--center" data-from="0.5" data-to="0.82">
         <h2 class="statement">Clarity, concern, encouragement —<br>and a willingness to <em>challenge.</em></h2>
@@ -139,20 +148,6 @@
     </div>
   </section>
 
-  <!-- ═══ INFO · IN THE PRESS (rotating) ═══ -->
-  <section class="info" id="press">
-    <div class="info__wrap">
-      <p class="eyebrow center" data-fade>In the Press</p>
-      <div class="quoterotate" data-fade>
-        <blockquote class="qr__item is-active"><p>Perhaps the City's premier tutoring company.</p><cite>The New York Times</cite></blockquote>
-        <blockquote class="qr__item"><p>The Institute for Advanced Study of tutoring services.</p><cite>The New Yorker</cite></blockquote>
-        <blockquote class="qr__item"><p>Advantage Testing has fostered intellectual growth and academic success amongst the future business, artistic, and civic leaders who will shape our City and our world.</p><cite>Mayor Michael Bloomberg</cite></blockquote>
-        <blockquote class="qr__item"><p>In the end, Advantage Testing is simply bringing to the SAT the same qualities we value in any teacher — passion, patience, clarity, inspiration.</p><cite>The New York Times Magazine</cite></blockquote>
-        <blockquote class="qr__item"><p>A pioneer in instituting the scrupulous standards that have elevated tutoring to the respected profession it has become.</p><cite>The London Evening Standard</cite></blockquote>
-      </div>
-      <div class="qr__dots" id="qrDots"></div>
-    </div>
-  </section>
 
   <!-- ═══ INFO · THE METHOD ═══ -->
   <section class="info" id="approach">
@@ -307,6 +302,10 @@
       var p=proj(o.c); if(!p) return;
       var grp=g.append('g').attr('class','usmap__mk').attr('transform','translate('+p[0]+','+p[1]+') scale(0)').style('opacity',0);
       grp.datum({x:p[0],y:p[1]});
+      var href='location-'+o.n.toLowerCase().replace(/,/g,'').replace(/\s+/g,'-')+'.html';
+      grp.style('cursor','pointer').attr('role','link').attr('tabindex',0)
+         .on('click',function(){ window.location.href=href; })
+         .on('keydown',function(ev){ if(ev.key==='Enter'){ window.location.href=href; } });
       grp.append('ellipse').attr('class','usmap__shadow').attr('cx',0).attr('cy',1.5).attr('rx',5).attr('ry',2);
       grp.append('path').attr('class','usmap__pin').attr('d','M0,0 C-6.2,-11 -11.5,-15 -11.5,-22.5 A11.5,11.5 0 1 1 11.5,-22.5 C11.5,-15 6.2,-11 0,0 Z');
       grp.append('circle').attr('class','usmap__pinhole').attr('cx',0).attr('cy',-22.5).attr('r',4.6);
